@@ -1,4 +1,5 @@
 import Banner from "../components/Banner";
+import DataGrid from "../components/DataGrid";
 import Navbar from "../components/Navbar";
 import SearchForm from "../components/SearchForm";
 
@@ -8,6 +9,7 @@ const Homepage = () => {
       <Navbar />
       <Banner />
       <SearchForm />
+      <DataGrid />
     </>
   );
 };

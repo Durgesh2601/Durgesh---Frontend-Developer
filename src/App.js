@@ -1,10 +1,17 @@
+import { ConfigProvider, theme } from "antd";
 import Homepage from "./pages/Homepage";
 
 function App() {
   return (
-    <div>
-      <Homepage />
-    </div>
+    <ConfigProvider
+      theme={{
+        algorithm: theme.darkAlgorithm,
+      }}
+    >
+      <div>
+        <Homepage />
+      </div>
+    </ConfigProvider>
   );
 }
 

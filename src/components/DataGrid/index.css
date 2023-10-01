@@ -1,0 +1,10 @@
+.data-grid {
+  margin: auto;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.pagination {
+  width: fit-content;
+  margin: auto;
+  margin-top: 2rem;
+}

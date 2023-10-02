@@ -33,3 +33,5 @@ export const formFields = [
 ];
 
 export const ITEMS_PER_PAGE = 10;
+
+export const DATE_PICKER_FORMAT = "YYYY-MM-DD HH:mm:ss";

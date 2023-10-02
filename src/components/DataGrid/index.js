@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Col, Pagination, Row } from "antd";
+import { Col, Empty, Pagination, Row } from "antd";
 import Capsule from "./Capsule";
 import { ITEMS_PER_PAGE } from "../../constants";
 import { getCurrentPageData } from "../../utils/helperMethods";
@@ -25,26 +25,32 @@ const DataGrid = ({
 
   return (
     <>
-      {currPageData?.length > 0 && (
-        <Row className="data-grid" justify="center">
-          {currPageData?.map((item) => (
-            <Col key={item?.capsule_serial} span={5}>
-              <Capsule
-                {...{ item, isLoading, setCurrCapsule, setIsModalVisible }}
-              />
-            </Col>
-          ))}
+      {currPageData?.length > 0 ? (
+        <>
+          <Row className="data-grid" justify="center">
+            {currPageData?.map((item) => (
+              <Col key={item?.capsule_serial} span={5}>
+                <Capsule
+                  {...{ item, isLoading, setCurrCapsule, setIsModalVisible }}
+                />
+              </Col>
+            ))}
+          </Row>
+          <Row className="container-sub" justify="center">
+            <Pagination
+              defaultCurrent={1}
+              current={currentPage}
+              total={data?.length}
+              pageSize={ITEMS_PER_PAGE}
+              onChange={(page) => handlePageChange(page)}
+            />
+          </Row>
+        </>
+      ) : (
+        <Row className="container-sub">
+          <Empty />
         </Row>
       )}
-      <Row className="pagination" justify="center">
-        <Pagination
-          defaultCurrent={1}
-          current={currentPage}
-          total={data?.length}
-          pageSize={ITEMS_PER_PAGE}
-          onChange={(page) => handlePageChange(page)}
-        />
-      </Row>
       {currCapsule && (
         <CapsuleDetails
           {...{

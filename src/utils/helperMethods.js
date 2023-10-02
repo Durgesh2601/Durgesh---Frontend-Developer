@@ -27,20 +27,20 @@ export const getTransformedData = (capsule = {}) => {
 };
 
 export const getFilteredData = (searchCriteria, data) => {
-  const filteredData = data?.filter((item) => {
+  return (data || []).filter((item) => {
+    const { status, original_launch, type } = searchCriteria;
+    const {
+      status: itemStatus,
+      original_launch: itemLaunch,
+      type: itemType,
+    } = item;
+
     const statusMatch =
-      !searchCriteria.status ||
-      item.status.toLowerCase() === searchCriteria.status.toLowerCase();
-
+      !status || itemStatus?.toLowerCase() === status?.toLowerCase();
     const launchMatch =
-      !searchCriteria.originalLaunch ||
-      item.original_launch.includes(searchCriteria.originalLaunch);
-
-    const typeMatch =
-      !searchCriteria.type ||
-      item.type.toLowerCase() === searchCriteria.type.toLowerCase();
+      !original_launch || itemLaunch?.includes(original_launch);
+    const typeMatch = !type || itemType?.toLowerCase() === type?.toLowerCase();
 
     return statusMatch && launchMatch && typeMatch;
   });
-  return filteredData || [];
 };

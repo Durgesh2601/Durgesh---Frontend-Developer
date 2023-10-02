@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Button,
   Col,
@@ -8,12 +9,13 @@ import {
   Select,
   Typography,
 } from "antd";
-import { formFields } from "../../constants";
+import { DATE_PICKER_FORMAT, formFields } from "../../constants";
 import "./index.css";
 
 const { Title } = Typography;
 
 const SearchForm = ({ onSearch, setFetchData }) => {
+  const [isDisabled, setIsDisabled] = useState(true);
   const [form] = Form.useForm();
 
   const getComponent = (field) => {
@@ -30,7 +32,12 @@ const SearchForm = ({ onSearch, setFetchData }) => {
         );
       case "date":
         return (
-          <DatePicker style={{ width: "100%" }} placeholder={field?.label} />
+          <DatePicker
+            showTime
+            style={{ width: "100%" }}
+            placeholder={field?.label}
+            format={DATE_PICKER_FORMAT}
+          />
         );
       default:
         return <Input placeholder={field?.label} />;
@@ -40,6 +47,15 @@ const SearchForm = ({ onSearch, setFetchData }) => {
   const handleResetFilters = () => {
     form.resetFields();
     setFetchData((prev) => !prev);
+    setIsDisabled(true);
+  };
+
+  const handleFormFieldsChange = () => {
+    const values = form.getFieldsValue();
+    const isDisabled = Object.values(values).every(
+      (value) => value === undefined || value === ""
+    );
+    setIsDisabled(isDisabled);
   };
 
   return (
@@ -47,7 +63,11 @@ const SearchForm = ({ onSearch, setFetchData }) => {
       <Row align="center">
         <Title level={2}>Cosmic Capsule Compass</Title>
       </Row>
-      <Form form={form} onFinish={onSearch}>
+      <Form
+        form={form}
+        onFinish={onSearch}
+        onFieldsChange={handleFormFieldsChange}
+      >
         <Row className="form-fields" align="center">
           {formFields.map((field) => (
             <Col span={9} key={field?.id}>
@@ -64,6 +84,7 @@ const SearchForm = ({ onSearch, setFetchData }) => {
               danger
               style={{ width: "100%" }}
               onClick={handleResetFilters}
+              disabled={isDisabled}
             >
               Clear Filters
             </Button>

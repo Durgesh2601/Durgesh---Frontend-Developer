@@ -5,12 +5,15 @@ import Capsule from "./Capsule";
 import { ITEMS_PER_PAGE } from "../../constants";
 import { getCurrentPageData } from "../../utils/helperMethods";
 import "./index.css";
+import CapsuleDetails from "./CapsuleDetails";
 
 const DataGrid = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [currPageData, setCurrPageData] = useState([]);
+  const [currCapsule, setCurrCapsule] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   // get data from api
   const getData = useCallback(async () => {
@@ -27,6 +30,7 @@ const DataGrid = () => {
       setIsLoading(false);
       console.error(error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -45,7 +49,9 @@ const DataGrid = () => {
         <Row className="data-grid" justify="center">
           {currPageData?.map((item) => (
             <Col key={item?.capsule_serial} span={5}>
-              <Capsule {...{ item, isLoading }} />
+              <Capsule
+                {...{ item, isLoading, setCurrCapsule, setIsModalVisible }}
+              />
             </Col>
           ))}
         </Row>
@@ -59,6 +65,16 @@ const DataGrid = () => {
           onChange={(page) => handlePageChange(page)}
         />
       </Row>
+      {currCapsule && (
+        <CapsuleDetails
+          {...{
+            currCapsule,
+            setCurrCapsule,
+            isModalVisible,
+            setIsModalVisible,
+          }}
+        />
+      )}
     </>
   );
 };

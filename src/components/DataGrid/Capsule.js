@@ -1,10 +1,34 @@
-import { Card } from "antd";
+import { Card, Row, Typography } from "antd";
 
-const Capsule = ({ item, loading = false, isLoading }) => {
-  const { capsule_serial, } = item;
-  return <Card title={capsule_serial} loading={isLoading} hoverable>
+const { Text } = Typography;
+const Capsule = ({
+  item,
+  isLoading = false,
+  setCurrCapsule,
+  setIsModalVisible,
+}) => {
+  const { capsule_serial, original_launch, type } = item;
+  const formattedDate = new Date(original_launch)?.toLocaleString();
 
-  </Card>;
+  const handleOnClickCapsule = () => {
+    setCurrCapsule(item);
+    setIsModalVisible(true);
+  };
+
+  return (
+    <Card
+      className="card-item"
+      title={capsule_serial}
+      loading={isLoading}
+      hoverable
+      onClick={handleOnClickCapsule}
+    >
+      <Row>
+        <Text>Type : {type}</Text>
+      </Row>
+      <Text>Launch Date : {formattedDate}</Text>
+    </Card>
+  );
 };
 
 export default Capsule;

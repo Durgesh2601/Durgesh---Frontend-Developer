@@ -25,3 +25,22 @@ export const getTransformedData = (capsule = {}) => {
   });
   return { missions, transformedData };
 };
+
+export const getFilteredData = (searchCriteria, data) => {
+  const filteredData = data?.filter((item) => {
+    const statusMatch =
+      !searchCriteria.status ||
+      item.status.toLowerCase() === searchCriteria.status.toLowerCase();
+
+    const launchMatch =
+      !searchCriteria.originalLaunch ||
+      item.original_launch.includes(searchCriteria.originalLaunch);
+
+    const typeMatch =
+      !searchCriteria.type ||
+      item.type.toLowerCase() === searchCriteria.type.toLowerCase();
+
+    return statusMatch && launchMatch && typeMatch;
+  });
+  return filteredData || [];
+};

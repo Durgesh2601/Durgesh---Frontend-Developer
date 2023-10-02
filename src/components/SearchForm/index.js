@@ -13,7 +13,7 @@ import "./index.css";
 
 const { Title } = Typography;
 
-const SearchForm = ({ onSearch }) => {
+const SearchForm = ({ onSearch, setFetchData }) => {
   const [form] = Form.useForm();
 
   const getComponent = (field) => {
@@ -37,6 +37,11 @@ const SearchForm = ({ onSearch }) => {
     }
   };
 
+  const handleResetFilters = () => {
+    form.resetFields();
+    setFetchData((prev) => !prev);
+  };
+
   return (
     <>
       <Row align="center">
@@ -49,9 +54,18 @@ const SearchForm = ({ onSearch }) => {
               <Form.Item name={field?.name}>{getComponent(field)}</Form.Item>
             </Col>
           ))}
-          <Col span={9}>
+          <Col span={5}>
             <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
               Search
+            </Button>
+          </Col>
+          <Col span={4}>
+            <Button
+              danger
+              style={{ width: "100%" }}
+              onClick={handleResetFilters}
+            >
+              Clear Filters
             </Button>
           </Col>
         </Row>

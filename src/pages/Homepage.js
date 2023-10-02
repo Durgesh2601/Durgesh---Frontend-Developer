@@ -11,6 +11,7 @@ const Homepage = () => {
   const [data, setData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [currPageData, setCurrPageData] = useState([]);
+  const [fetchData, setFetchData] = useState(false);
   // get data from api
   const getData = useCallback(async () => {
     try {
@@ -27,22 +28,25 @@ const Homepage = () => {
       console.error(error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchData]);
 
   useEffect(() => {
     getData();
   }, [getData]);
 
   const onSearch = (values) => {
+    setCurrentPage(1);
     const filteredData = getFilteredData(values, data);
-    setCurrPageData(filteredData);
+    setData(filteredData);
+    const getPageData = getCurrentPageData(filteredData, currentPage);
+    setCurrPageData(getPageData);
   };
 
   return (
     <>
       <Navbar />
       <Banner />
-      <SearchForm {...{ onSearch }} />
+      <SearchForm {...{ onSearch, setFetchData }} />
       <DataGrid
         {...{
           isLoading,

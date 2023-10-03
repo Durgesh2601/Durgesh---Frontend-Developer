@@ -60,8 +60,10 @@ const SearchForm = ({ onSearch, setFetchData }) => {
 
   return (
     <>
-      <Row align="center">
-        <Title level={2}>Cosmic Capsule Compass</Title>
+      <Row justify="center">
+        <Title style={{ textAlign: "center" }} level={2}>
+          Cosmic Capsule Compass
+        </Title>
       </Row>
       <Form
         form={form}
@@ -70,16 +72,16 @@ const SearchForm = ({ onSearch, setFetchData }) => {
       >
         <Row className="form-fields" align="center">
           {formFields.map((field) => (
-            <Col span={9} key={field?.id}>
+            <Col xs={24} sm={12} md={9} key={field?.id}>
               <Form.Item name={field?.name}>{getComponent(field)}</Form.Item>
             </Col>
           ))}
-          <Col span={5}>
+          <Col xs={24} sm={12} md={5}>
             <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
               Search
             </Button>
           </Col>
-          <Col span={4}>
+          <Col xs={24} sm={12} md={4}>
             <Button
               danger
               style={{ width: "100%" }}

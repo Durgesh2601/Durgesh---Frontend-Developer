@@ -29,7 +29,7 @@ const DataGrid = ({
         <>
           <Row className="data-grid" justify="center">
             {currPageData?.map((item) => (
-              <Col key={item?.capsule_serial} span={5}>
+              <Col key={item?.capsule_serial} xs={22} sm={10} md={5}>
                 <Capsule
                   {...{ item, isLoading, setCurrCapsule, setIsModalVisible }}
                 />

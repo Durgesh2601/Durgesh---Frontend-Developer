@@ -9,6 +9,7 @@ import { getCurrentPageData, getFilteredData } from "../utils/helperMethods";
 const Homepage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null);
+  const [allData, setAllData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [currPageData, setCurrPageData] = useState([]);
   const [fetchData, setFetchData] = useState(false);
@@ -19,6 +20,7 @@ const Homepage = () => {
       const apiUrl = process.env.REACT_APP_API_BASE_URL;
       const response = await axios.get(apiUrl);
       const data = response?.data;
+      setAllData(data);
       setData(data);
       const currPageData = getCurrentPageData(data, currentPage);
       setCurrPageData(currPageData);
@@ -36,7 +38,7 @@ const Homepage = () => {
 
   const onSearch = (values) => {
     setCurrentPage(1);
-    const filteredData = getFilteredData(values, data);
+    const filteredData = getFilteredData(values, allData);
     setData(filteredData);
     const getPageData = getCurrentPageData(filteredData, currentPage);
     setCurrPageData(getPageData);
